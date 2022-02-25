@@ -74,7 +74,11 @@ app.post('/api/users', (req,res)=>{
       
       });
 
+         
+
          newExercise.save((err,data)=>{
+
+          
 
              if(!err)
              {
@@ -87,13 +91,21 @@ app.post('/api/users', (req,res)=>{
                   res.json(x);
              }
 
-              // else
-              // res.send(err);
-
 
 
          })
+ 
+        app.get("/api/users/:id/logs",(req,res)=>{
 
+                 let id=req.params.id;
+
+                  
+
+
+
+
+
+        });
 
 
 
