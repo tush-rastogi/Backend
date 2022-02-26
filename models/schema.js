@@ -40,7 +40,7 @@ const  userSchema=new schema({
          required:true
      },
 
-     logs:[ExerciseSchema],
+     log:[ExerciseSchema],
      count:{
           type:Number,
           default:0

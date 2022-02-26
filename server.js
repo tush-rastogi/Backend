@@ -89,7 +89,7 @@ app.post('/api/users', (req,res)=>{
       db.user.findByIdAndUpdate(req.params._id,
           
            
-        {$push:{logs:newExercise}},
+        {$push:{log:newExercise}},
         {new:true},
         (err,data)=>{
           res.json({
@@ -113,7 +113,7 @@ app.post('/api/users', (req,res)=>{
                 
     const exerciseDetails= await db.user.findOne({_id:req.params._id});
 
-      db.user.findByIdAndUpdate(req.params._id,{count:exerciseDetails.logs.length},{new:true},(err,data)=>{
+      db.user.findByIdAndUpdate(req.params._id,{count:exerciseDetails.log.length},{new:true},(err,data)=>{
 
           
          res.send(exerciseDetails);
