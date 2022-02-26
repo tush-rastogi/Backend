@@ -3,6 +3,7 @@ const app = express()
 const mongoose=require('mongoose');
 const cors = require('cors');
 const db=require('./models/schema.js');
+const { exercise } = require('./models/schema.js');
 require('dotenv').config()
 
 app.use(cors())
@@ -24,7 +25,7 @@ app.post('/api/users', (req,res)=>{
 
          let name=req.body.username;
           
-           let k=db.user.findOne({username:name});
+          //  let k=db.user.findOne({username:name});
 
               
            
@@ -59,9 +60,14 @@ app.post('/api/users', (req,res)=>{
 
   })
 
+
+
+
   app.post('/api/users/:_id/exercises',(req,res)=>{
 
-     
+       console.log(req.params);
+
+
        let newExercise=new db.exercise({_id:req.params._id,
       
                                           description:req.body.description,
@@ -74,44 +80,50 @@ app.post('/api/users', (req,res)=>{
       
       });
 
-         
+          if(newExercise.date=='')
+          {
+            newExercise.date=new Date().toISOString().substring(0,10);
+          }
 
-         newExercise.save((err,data)=>{
+
+      db.user.findByIdAndUpdate(req.params._id,
+          
+           
+        {$push:{logs:newExercise}},
+        {new:true},
+        (err,data)=>{
+          res.json({
+
+            
+
+
+
+
+          });
+        }
+
+    
+)
+
+        })
+
+
+  app.get("/api/users/:_id/logs",async (req,res)=>{
+
+                
+    const exerciseDetails= await db.user.findOne({_id:req.params._id});
+
+      db.user.findByIdAndUpdate(req.params._id,{count:exerciseDetails.logs.length},{new:true},(err,data)=>{
 
           
+         res.send(exerciseDetails);
 
-             if(!err)
-             {
-               let x={}
-                x._id=data._id,
-                 x.description=data.description
-                 x.duration=data.duration
-                 x.date=data.date
+      })
+       
+    
 
-                  res.json(x);
-             }
-
-
-
-         })
- 
-        app.get("/api/users/:id/logs",(req,res)=>{
-
-                 let id=req.params.id;
-
-                  
-
-
-
-
-
-        });
-
-
-
-
+       
   });
-
 
 
 
