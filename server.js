@@ -91,15 +91,9 @@ app.post('/api/users', (req,res)=>{
            
         {$push:{log:newExercise}},
         {new:true},
-        (err,data)=>{
-          res.json({
-
-            
-
-
-
-
-          });
+        async (err,data)=>{
+          
+           res.send( await db.user.findOne({_id:req.params._id}));
         }
 
     
