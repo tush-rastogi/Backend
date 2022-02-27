@@ -116,14 +116,14 @@ app.post('/api/users', (req,res)=>{
          if(req.query.limit)
            limit=req.query.limit
 
-           var fromDate=new Date(0);
-           let toDate=new Date();
+           var from=new Date(0);
+           let to=new Date();
            
              if(req.query.fromDate)
-               fromDate=new Date(req.queryfromDate).toString().substring(0,15);
+               from=new Date(req.queryfromDate).toString().substring(0,15);
 
                if(req.query.toDate)
-               toDate=new Date(req.querytoDate).toString().substring(0,15);
+               to=new Date(req.querytoDate).toString().substring(0,15);
 
 
                 
@@ -132,7 +132,7 @@ app.post('/api/users', (req,res)=>{
 
          let t=x.date;
 
-           return fromDate>=t&&toDate<=t
+           return from>=t&&to<=t;
 
       })},{new:true},(err,data)=>{
 
