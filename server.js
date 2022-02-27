@@ -68,7 +68,7 @@ app.post('/api/users', (req,res)=>{
        console.log(req.params);
 
 
-       let newExercise=new db.exercise({_id:req.params._id,
+       let newExercise=new db.exercise({
       
                                           description:req.body.description,
                                            
@@ -90,10 +90,11 @@ app.post('/api/users', (req,res)=>{
           
            
         {$push:{log:newExercise}},
+        
         {new:true},
-        async (err,data)=>{
+        (err,data)=>{
           
-           res.send( await db.user.findOne({_id:req.params._id}));
+           res.send(data);
         }
 
     
