@@ -80,9 +80,9 @@ app.post('/api/users', (req,res)=>{
       
       });
 
-          if(newExercise.date=='')
+          if(newExercise.date=='Invalid Date')
           {
-            newExercise.date=new Date().toISOString().substring(0,10);
+            newExercise.date=new Date().toString().substring(0,15);
           }
 
 
