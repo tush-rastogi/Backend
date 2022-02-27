@@ -67,14 +67,14 @@ app.post('/api/users', (req,res)=>{
 
        console.log(req.params);
 
-
+        let date=req.body.date;
        let newExercise=new db.exercise({
       
                                           description:req.body.description,
                                            
                                            duration:req.body.duration,
 
-                                            date:req.body.date 
+                                            date:new Date(date).toString().substring(0,15)
       
       
       
