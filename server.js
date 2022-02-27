@@ -4,6 +4,7 @@ const mongoose=require('mongoose');
 const cors = require('cors');
 const db=require('./models/schema.js');
 const { exercise } = require('./models/schema.js');
+const { request } = require('express');
 require('dotenv').config()
 
 app.use(cors())
@@ -65,7 +66,7 @@ app.post('/api/users', (req,res)=>{
 
   app.post('/api/users/:_id/exercises',(req,res)=>{
 
-       console.log(req.params);
+      //  console.log(req.params);
 
         let date=req.body.date;
        let newExercise=new db.exercise({
@@ -105,10 +106,35 @@ app.post('/api/users', (req,res)=>{
 
   app.get("/api/users/:_id/logs",async (req,res)=>{
 
-                
+       
+
+
     const exerciseDetails= await db.user.findOne({_id:req.params._id});
 
-      db.user.findByIdAndUpdate(req.params._id,{count:exerciseDetails.log.length},{new:true},(err,data)=>{
+    let limit=exerciseDetails.log.length;
+        
+         if(req.query.limit)
+           limit=req.query.limit
+
+           var fromDate=new Date(0);
+           let toDate=new Date();
+           
+             if(req.query.fromDate)
+               fromDate=new Date(req.queryfromDate).toString().substring(0,15);
+
+               if(req.query.toDate)
+               toDate=new Date(req.querytoDate).toString().substring(0,15);
+
+
+                
+
+      db.user.findByIdAndUpdate(req.params._id,{count:exerciseDetails.log.length,log:exerciseDetails.log.slice(0,limit),log:exerciseDetails.log.filter((x)=>{
+
+         let t=x.date;
+
+           return fromDate>=t&&toDate<=t
+
+      })},{new:true},(err,data)=>{
 
           
          res.send(exerciseDetails);
