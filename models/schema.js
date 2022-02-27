@@ -19,7 +19,7 @@ const ExerciseSchema=new schema({
       },
       duration:{
 
-         type:String,
+         type:Number,
          required:true
 
 
